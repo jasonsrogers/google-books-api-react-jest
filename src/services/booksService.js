@@ -25,7 +25,11 @@ class BookService {
     for (const key in parameters) {
       if (parameters.hasOwnProperty(key)) {
         const value = parameters[key];
-        qsArray.push(encodeURIComponent(key) + "=" + encodeURIComponent(value));
+        if (value !== undefined) {
+          qsArray.push(
+            encodeURIComponent(key) + "=" + encodeURIComponent(value)
+          );
+        }
       }
     }
 
@@ -61,6 +65,9 @@ class BookService {
    * @returns {Object} pageInfo: start and end index to query
    */
   static calculatePage(page) {
+    if (page === undefined) {
+      return {};
+    }
     const startIndex = page * pageSize;
     const endIndex = (page + 1) * pageSize - 1;
     return { startIndex, endIndex };
@@ -84,6 +91,9 @@ class BookService {
           ...pageInfo,
           orderBy,
           filterBy
+        }).then(resp => {
+          // there must be a way to simply return ?
+          resolve(resp);
         });
       } else {
         reject(validation.errorMessages);

@@ -1,10 +1,14 @@
 import { BookService, orderByValues, filterValues } from "../booksService";
 describe("Validate basics of book service", () => {
-  test("it gets books default", () => {
+  test("it gets books default", async () => {
     const mockFn = jest.fn(() => {
       var p = new Promise((resolve, reject) => {
         resolve({
-          json: () => {}
+          json: () => {
+            return new Promise((resolve, reject) => {
+              resolve("a response");
+            });
+          }
         });
       });
       return p;
@@ -12,9 +16,9 @@ describe("Validate basics of book service", () => {
 
     global.fetch = mockFn;
     expect(mockFn).toHaveBeenCalledTimes(0);
-    return BookService._getBooks().then(() => {
-      expect(mockFn).toHaveBeenCalledTimes(1);
-    });
+
+    expect(BookService._getBooks()).resolves.toBe("a response");
+    expect(mockFn).toHaveBeenCalledTimes(1);
   });
 
   test("bookService: buildUrl", () => {
@@ -47,9 +51,13 @@ describe("Validate basics of book service", () => {
   });
 
   test("bookService: calculates the page params", () => {
-    const pageInfo = BookService.calculatePage(2);
+    let pageInfo = BookService.calculatePage(2);
     expect(pageInfo.startIndex).toBe(80);
     expect(pageInfo.endIndex).toBe(119);
+    pageInfo = BookService.calculatePage();
+    expect(pageInfo.startIndex).toBe(undefined);
+    expect(pageInfo.endIndex).toBe(undefined);
+    expect(pageInfo).toEqual({});
   });
 });
 

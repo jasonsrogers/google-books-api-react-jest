@@ -14,7 +14,7 @@ class App extends Component {
   }
   componentDidMount() {
     this.setState({ loading: true });
-    BookService._getBooks().then(data => {
+    BookService.getBooksWithParams("css").then(data => {
       this.setState({
         books: data.items || [],
         isLoading: false
