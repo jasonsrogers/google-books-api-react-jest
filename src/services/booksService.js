@@ -11,7 +11,7 @@ const filterByValues = [
 ];
 
 // number of records to get by page
-const pageSize = 40;
+const pageSize = 20;
 
 class BookService {
   /**
@@ -111,7 +111,7 @@ class BookService {
    */
   static _getBooks(params) {
     return fetch(
-      this.buildUrl(baseUrl, Object.assign({ maxResults: 40 }, params))
+      this.buildUrl(baseUrl, Object.assign({ maxResults: pageSize }, params))
     ).then(function(response) {
       return response.json();
     });

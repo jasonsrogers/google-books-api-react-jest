@@ -1,4 +1,9 @@
-import { BookService, orderByValues, filterByValues } from "../booksService";
+import {
+  BookService,
+  orderByValues,
+  filterByValues,
+  pageSize
+} from "../booksService";
 describe("Validate basics of book service", () => {
   test("it gets books default", async () => {
     const mockFn = jest.fn(() => {
@@ -57,8 +62,8 @@ describe("Validate basics of book service", () => {
 
   test("bookService: calculates the page params", () => {
     let pageInfo = BookService.calculatePage(2);
-    expect(pageInfo.startIndex).toBe(80);
-    expect(pageInfo.endIndex).toBe(119);
+    expect(pageInfo.startIndex).toBe(pageSize * 2);
+    expect(pageInfo.endIndex).toBe(pageSize * 3 - 1);
     pageInfo = BookService.calculatePage();
     expect(pageInfo.startIndex).toBe(undefined);
     expect(pageInfo.endIndex).toBe(undefined);
@@ -87,7 +92,8 @@ describe("get books with api params", () => {
     ).resolves.toEqual({});
 
     expect(mockFn.mock.calls[0][0]).toBe(
-      "https://www.googleapis.com/books/v1/volumes?maxResults=40&q=a%20book%20query&startIndex=80&endIndex=119&orderBy=newest&filter=full"
+      `https://www.googleapis.com/books/v1/volumes?maxResults=${pageSize}&q=a%20book%20query&startIndex=${pageSize *
+        2}&endIndex=${pageSize * 3 - 1}&orderBy=newest&filter=full`
     );
 
     expect(
