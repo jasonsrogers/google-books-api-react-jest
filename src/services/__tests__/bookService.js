@@ -31,6 +31,7 @@ describe("Validate basics of book service", () => {
 
   test("bookService: areParamsValid", () => {
     let validation = BookService.areParamsValid(
+      "something",
       orderByValues[0],
       filterValues[0]
     );
@@ -42,6 +43,7 @@ describe("Validate basics of book service", () => {
     expect(validation.errorMessages).toEqual("Order By not valid");
 
     validation = BookService.areParamsValid(
+      "something",
       orderByValues[0],
       "something wrong"
     );

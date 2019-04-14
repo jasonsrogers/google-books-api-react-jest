@@ -1,26 +1,49 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 
 import { BookService } from "./services/booksService";
 import { BookList } from "./components/BookList";
+import { SearchPanel } from "./components/SearchPanel";
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
       books: [],
-      loading: false
+      loading: false,
+      textSearch: { value: "" }
     };
   }
   componentDidMount() {
-    this.setState({ loading: true });
-    BookService.getBooksWithParams("css").then(data => {
-      this.setState({
-        books: data.items || [],
-        isLoading: false
-      });
+    this.doSearch("");
+  }
+
+  doSearch(searchField) {
+    this.setState({
+      loading: true
     });
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => {
+      BookService.getBooksWithParams(
+        searchField.searchTerm,
+        0,
+        searchField.orderBy,
+        searchField.filterBy
+      ).then(
+        data => {
+          this.setState({
+            books: data.items || [],
+            isLoading: false
+          });
+        },
+        () => {
+          this.setState({
+            books: [],
+            isLoading: false
+          });
+        }
+      );
+    }, 500);
   }
   render() {
     const { isLoading, books } = this.state;
@@ -28,13 +51,12 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <h1>{isLoading ? "LOADING" : "LOADED"}</h1>
-
-          <div>
-            {/* {books.map((book, index) => {
-              return <h2 key={book.id}>{book.volumeInfo.title}</h2>;
-            })} */}
-            <BookList books={books} />
-          </div>
+          <SearchPanel
+            doSearch={value => {
+              this.doSearch(value);
+            }}
+          />
+          <BookList books={books} />
         </header>
       </div>
     );

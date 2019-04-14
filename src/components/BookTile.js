@@ -23,7 +23,13 @@ class BookTile extends React.Component {
   }
   render() {
     const {
-      volumeInfo: { title, subtitle, imageLinks, authors = [], description },
+      volumeInfo: {
+        title,
+        subtitle,
+        imageLinks = {},
+        authors = [],
+        description
+      },
       volumeInfo
     } = this.props;
 

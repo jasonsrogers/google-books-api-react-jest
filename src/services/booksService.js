@@ -44,8 +44,11 @@ class BookService {
    * @param {String} filterBy
    * @returns {Object} validation results
    */
-  static areParamsValid(orderBy, filterBy) {
+  static areParamsValid(queryString, orderBy, filterBy) {
     let errors = [];
+    if (!queryString) {
+      errors.push("Query string can't be blank");
+    }
     if (orderBy && orderByValues.indexOf(orderBy) === -1) {
       errors.push("Order By not valid");
     }
@@ -83,7 +86,7 @@ class BookService {
    */
   static getBooksWithParams(queryString, page, orderBy, filterBy) {
     return new Promise((resolve, reject) => {
-      const validation = this.areParamsValid(orderBy, filterBy);
+      const validation = this.areParamsValid(queryString, orderBy, filterBy);
       if (validation.isValid) {
         let pageInfo = this.calculatePage(page);
         return this._getBooks({
