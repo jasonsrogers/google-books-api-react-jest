@@ -29,8 +29,7 @@ class BookTile extends React.Component {
         imageLinks = {},
         authors = [],
         description
-      },
-      volumeInfo
+      }
     } = this.props;
 
     return (

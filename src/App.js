@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./App.css";
+import './App.scss'
 
 import { BookService } from "./services/booksService";
 import { BookList } from "./components/BookList";
@@ -37,7 +37,7 @@ class App extends Component {
     const { searchField, page } = this.state;
     this.setState(
       {
-        loading: true
+        isLoading: true
       },
       () => {
         // debounce the search
@@ -74,12 +74,12 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1>{isLoading ? "LOADING" : "LOADED"}</h1>
           <SearchPanel
             doSearch={value => {
               this.onSearchPanelChange(value);
             }}
           />
+          {isLoading ? <h1>LOADING</h1> : ""}
           {totalItems ? (
             <PaginationComponent
               page={page}
