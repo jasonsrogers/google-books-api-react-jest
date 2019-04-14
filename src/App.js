@@ -3,6 +3,7 @@ import logo from "./logo.svg";
 import "./App.css";
 
 import { BookService } from "./services/booksService";
+import { BookList } from "./components/BookList";
 
 class App extends Component {
   constructor() {
@@ -26,24 +27,13 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
           <h1>{isLoading ? "LOADING" : "LOADED"}</h1>
 
           <div>
-            {books.map((book, index) => {
+            {/* {books.map((book, index) => {
               return <h2 key={book.id}>{book.volumeInfo.title}</h2>;
-            })}
+            })} */}
+            <BookList books={books} />
           </div>
         </header>
       </div>
