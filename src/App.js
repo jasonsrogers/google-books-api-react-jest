@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import './App.scss'
+import "./App.scss";
 
 import { BookService } from "./services/booksService";
 import { BookList } from "./components/BookList";
@@ -14,11 +14,11 @@ class App extends Component {
       loading: false,
       totalItems: 0,
       page: 0,
-      searchField: {}
+      searchField: { searchTerm: "123" }
     };
   }
   componentDidMount() {
-    this.doSearch("");
+    this.doSearch();
   }
 
   onPageChanged(page) {
@@ -74,24 +74,39 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <SearchPanel
-            doSearch={value => {
-              this.onSearchPanelChange(value);
-            }}
-          />
-          {isLoading ? <h1>LOADING</h1> : ""}
-          {totalItems ? (
-            <PaginationComponent
-              page={page}
-              totalItems={totalItems}
-              onPageChanged={value => {
-                this.onPageChanged(value);
+          <div className="main-panel">
+            <SearchPanel
+              doSearch={value => {
+                this.onSearchPanelChange(value);
               }}
             />
-          ) : (
-            ""
-          )}
-          <BookList books={books} />
+            <div className="main-tile">
+              {totalItems ? (
+                <PaginationComponent
+                  page={page}
+                  totalItems={totalItems}
+                  onPageChanged={value => {
+                    this.onPageChanged(value);
+                  }}
+                />
+              ) : (
+                ""
+              )}
+              {isLoading ? <h1>LOADING</h1> : ""}
+              <BookList books={books} />
+              {totalItems ? (
+                <PaginationComponent
+                  page={page}
+                  totalItems={totalItems}
+                  onPageChanged={value => {
+                    this.onPageChanged(value);
+                  }}
+                />
+              ) : (
+                ""
+              )}
+            </div>
+          </div>
         </header>
       </div>
     );

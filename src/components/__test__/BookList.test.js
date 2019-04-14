@@ -5,8 +5,9 @@ import { Book } from "./testData";
 
 test("Book List", () => {
   const books = [Object.assign({}, Book)];
+  books[0].volumeInfo.description = false;
   const component = renderer.create(<BookList books={books} />);
-  expect(
-    component.root.findAllByProps({ className: "book-thumbnail" }).length
-  ).toBe(1);
+  expect(component.root.findAllByProps({ className: "book-tile" }).length).toBe(
+    1
+  );
 });
