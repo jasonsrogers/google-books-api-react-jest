@@ -1,7 +1,7 @@
 import React from "react";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
-import { orderByValues, filterValues } from "../services/booksService";
+import { orderByValues, filterByValues } from "../services/booksService";
 
 class SearchPanel extends React.Component {
   constructor(props) {
@@ -62,7 +62,7 @@ class SearchPanel extends React.Component {
             as="select"
           >
             <option />
-            {filterValues.map((value, index) => {
+            {filterByValues.map((value, index) => {
               return <option key={value}>{value}</option>;
             })}
           </Form.Control>

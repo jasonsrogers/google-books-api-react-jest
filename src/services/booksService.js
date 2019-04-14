@@ -2,7 +2,7 @@ const baseUrl = "https://www.googleapis.com/books/v1/volumes";
 // list of valie orderBy values
 const orderByValues = ["newest", "relevance"];
 // list of valie filter values
-const filterValues = [
+const filterByValues = [
   "ebooks",
   "free-ebooks",
   "full",
@@ -25,7 +25,7 @@ class BookService {
     for (const key in parameters) {
       if (parameters.hasOwnProperty(key)) {
         const value = parameters[key];
-        if (value !== undefined) {
+        if (value) {
           qsArray.push(
             encodeURIComponent(key) + "=" + encodeURIComponent(value)
           );
@@ -52,7 +52,7 @@ class BookService {
     if (orderBy && orderByValues.indexOf(orderBy) === -1) {
       errors.push("Order By not valid");
     }
-    if (filterBy && filterValues.indexOf(filterBy) === -1) {
+    if (filterBy && filterByValues.indexOf(filterBy) === -1) {
       errors.push("Filter By not valid");
     }
 
@@ -84,16 +84,16 @@ class BookService {
    * @param {String} orderBy: orderBy param
    * @param {String} filterBy: filterBy param
    */
-  static getBooksWithParams(queryString, page, orderBy, filterBy) {
+  static getBooksWithParams(queryString, page, orderBy, filter) {
     return new Promise((resolve, reject) => {
-      const validation = this.areParamsValid(queryString, orderBy, filterBy);
+      const validation = this.areParamsValid(queryString, orderBy, filter);
       if (validation.isValid) {
         let pageInfo = this.calculatePage(page);
         return this._getBooks({
           q: queryString,
           ...pageInfo,
           orderBy,
-          filterBy
+          filter
         }).then(resp => {
           // there must be a way to simply return ?
           resolve(resp);
@@ -118,4 +118,4 @@ class BookService {
   }
 }
 
-export { BookService, orderByValues, filterValues, pageSize };
+export { BookService, orderByValues, filterByValues, pageSize };

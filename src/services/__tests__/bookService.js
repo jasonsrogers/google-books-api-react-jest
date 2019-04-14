@@ -1,4 +1,4 @@
-import { BookService, orderByValues, filterValues } from "../booksService";
+import { BookService, orderByValues, filterByValues } from "../booksService";
 describe("Validate basics of book service", () => {
   test("it gets books default", async () => {
     const mockFn = jest.fn(() => {
@@ -33,11 +33,14 @@ describe("Validate basics of book service", () => {
     let validation = BookService.areParamsValid(
       "something",
       orderByValues[0],
-      filterValues[0]
+      filterByValues[0]
     );
     expect(validation.isValid).toBe(true);
 
-    validation = BookService.areParamsValid("something wrong", filterValues[0]);
+    validation = BookService.areParamsValid(
+      "something wrong",
+      filterByValues[0]
+    );
     expect(validation.isValid).toBe(false);
     expect(validation.errors.length).toEqual(1);
     expect(validation.errorMessages).toEqual("Order By not valid");
@@ -84,7 +87,7 @@ describe("get books with api params", () => {
     ).resolves.toEqual({});
 
     expect(mockFn.mock.calls[0][0]).toBe(
-      "https://www.googleapis.com/books/v1/volumes?maxResults=40&q=a%20book%20query&startIndex=80&endIndex=119&orderBy=newest&filterBy=full"
+      "https://www.googleapis.com/books/v1/volumes?maxResults=40&q=a%20book%20query&startIndex=80&endIndex=119&orderBy=newest&filter=full"
     );
 
     expect(
