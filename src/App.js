@@ -94,26 +94,30 @@ class App extends Component {
             />
             <div className="main-tile">
               {totalItems ? (
-                <PaginationComponent
-                  page={page}
-                  totalItems={totalItems}
-                  onPageChanged={value => {
-                    this.onPageChanged(value);
-                  }}
-                />
+                <div className="pagination-container">
+                  <PaginationComponent
+                    page={page}
+                    totalItems={totalItems}
+                    onPageChanged={value => {
+                      this.onPageChanged(value);
+                    }}
+                  />
+                </div>
               ) : (
                 ""
               )}
               {isLoading ? <h1>LOADING</h1> : ""}
               <BookList books={books} />
               {totalItems ? (
-                <PaginationComponent
-                  page={page}
-                  totalItems={totalItems}
-                  onPageChanged={value => {
-                    this.onPageChanged(value);
-                  }}
-                />
+                <div className="pagination-container">
+                  <PaginationComponent
+                    page={page}
+                    totalItems={totalItems}
+                    onPageChanged={value => {
+                      this.onPageChanged(value);
+                    }}
+                  />
+                </div>
               ) : (
                 ""
               )}
