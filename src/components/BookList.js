@@ -9,7 +9,7 @@ class BookList extends React.Component {
     return (
       <div>
         {books.map((book, index) => {
-          return <BookTile key={book.id} {...book} />;
+          return <BookTile key={book.id + book.etag} {...book} />;
         })}
       </div>
     );

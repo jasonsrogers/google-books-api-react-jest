@@ -12,7 +12,9 @@ const filterByValues = [
 
 // number of records to get by page
 const pageSize = 20;
-
+/**
+ * Service layer to handle loading of books
+ */
 class BookService {
   /**
    * helper function to build url params (fetch doesn't have one)

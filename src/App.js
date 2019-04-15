@@ -14,25 +14,37 @@ class App extends Component {
       loading: false,
       totalItems: 0,
       page: 0,
-      searchField: { searchTerm: "123" }
+      searchField: { searchTerm: "" }
     };
   }
   componentDidMount() {
-    this.doSearch();
+    // API doesn't return anything without a query string
+    // this.doSearch();
   }
 
+  /**
+   * Callback to update current page and trigger load of results
+   * @param {Number} page
+   */
   onPageChanged(page) {
     this.setState({ page }, () => {
       this.doSearch();
     });
   }
-
+  /**
+   * trigger search based on search panel fields
+   * @param {Object} searchField
+   */
   onSearchPanelChange(searchField) {
-    this.setState({ searchField }, () => {
+    this.setState({ searchField, page: 0 }, () => {
       this.doSearch();
     });
   }
 
+  /**
+   *
+   * Do actual back end search
+   */
   doSearch() {
     const { searchField, page } = this.state;
     this.setState(

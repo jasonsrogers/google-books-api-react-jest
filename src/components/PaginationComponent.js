@@ -19,6 +19,10 @@ class PaginationComponent extends React.Component {
 
     let active = page;
     let totalPages = Math.floor(totalItems / pageSize) + 1;
+    // TODO figure out why high values for startIndex causes back end error
+
+    // NOTE: as google API has problems when querying high start indexes,
+    // I opted for a simple left right pagination and commented out first/last etc
     return (
       <Pagination size="sm" className="pagination-component">
         {/* <Pagination.First
@@ -26,11 +30,15 @@ class PaginationComponent extends React.Component {
             this.props.onPageChanged(0);
           }}
         /> */}
-        <Pagination.Prev
-          onClick={() => {
-            this.props.onPageChanged(active - 1);
-          }}
-        />
+        {active ? (
+          <Pagination.Prev
+            onClick={() => {
+              this.props.onPageChanged(active - 1);
+            }}
+          />
+        ) : (
+          ""
+        )}
         {/* <Pagination.Item>{1}</Pagination.Item>
         <Pagination.Ellipsis /> */}
 
@@ -44,11 +52,15 @@ class PaginationComponent extends React.Component {
 
         {/* <Pagination.Ellipsis />
         <Pagination.Item>{20}</Pagination.Item> */}
-        <Pagination.Next
-          onClick={() => {
-            this.props.onPageChanged(active + 1);
-          }}
-        />
+        {active < totalPages ? (
+          <Pagination.Next
+            onClick={() => {
+              this.props.onPageChanged(active + 1);
+            }}
+          />
+        ) : (
+          ""
+        )}
         {/* <Pagination.Last
           onClick={() => {
             this.props.onPageChanged(totalPages - 1);

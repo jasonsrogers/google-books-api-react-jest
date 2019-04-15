@@ -4,7 +4,9 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { orderByValues, filterByValues } from "../services/booksService";
-
+/**
+ * Class that renders SearchPanel (Search Term, orderBy, filterBy)
+ */
 class SearchPanel extends React.Component {
   constructor(props) {
     super(props);
@@ -12,6 +14,11 @@ class SearchPanel extends React.Component {
       searchTerm: ""
     };
   }
+  /**
+   * callback for field change
+   * @param {Object} field key/value to copy to state and to pass
+   * up for search
+   */
   searchFieldsChanged(field) {
     this.setState(field, () => {
       this.props.doSearch({ ...this.state });
