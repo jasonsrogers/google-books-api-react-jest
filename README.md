@@ -9,10 +9,13 @@ Basic pagination was also implemented, however the ability to skip to the last p
 
 Required:
 
+- git
 - Nodejs
 
 Steps:
 
+- clone project: git clone https://github.com/jasonsrogers/google-books-api-react-jest.git
+- open directory: cd google-books-api-react-jest
 - initialise project : `npm install`
 - run project : `npm start`
   (should open browser to http://localhost:3000)
